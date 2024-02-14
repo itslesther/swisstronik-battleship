@@ -1,21 +1,17 @@
 .game {
-  cursor: pointer;
-  font-size: 80%;
-  display: flex;
-  align-items: center;
-  user-select: none;
+  @apply flex cursor-pointer text-lg items-center select-none;
 }
 .game:hover {
-  color: yellow;
+  @apply text-yellow-400;
 }
 .game--disabled {
-  cursor: default;
+  @apply cursor-default;
 }
 .game--disabled:hover {
-  color: inherit;
+  @apply text-inherit;
 }
 .game + .game {
-  margin-top: 12px;
+  @apply mt-4;
 }
 .game--open:hover button {
   background-color: gainsboro;
@@ -23,32 +19,26 @@
 
 /* META */
 .game__status .label {
-  min-width: 65px;
+  @apply min-w-[65px];
 }
 .game__grid .label {
-  min-width: 26px;
+  @apply min-w-[26px];
 }
 
 /* VS */
 .game__vs {
-  display: flex;
-  align-items: center;
+  @apply flex items-center;
 }
 .game__vs small {
-  color: grey;
-  font-weight: bold;
-  text-transform: uppercase;
-  padding-right: 6px;
+  @apply text-gray-500 font-bold uppercase pr-[6px];
 }
 
 .game__vsplayer {
-  max-width: 100px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  @apply max-w-[100px] overflow-hidden text-ellipsis;
 }
 
 /* HORIZONTAL ALIGNEMENT */
 .game__grid,
 .game__vs {
-  margin-left: 12px;
+  @apply ml-4;
 }

@@ -23,22 +23,32 @@ export default class Application {
   account: Web3BaseWalletAccount | null;
   accountIndex: number;
   contract!: Contract<typeof BattleshipAbi>;
-  ganache: boolean;
+  providerParam: "metamask" | "raw-keys";
 
   constructor(
     web3: Web3<RegisteredSubscription>,
     store: Store,
     accountIndex: number,
-    ganache: boolean
+    providerParam: "metamask" | "raw-keys"
   ) {
     this.web3 = web3;
     this.dispatch = store.dispatch;
     this.account = null;
     this.accountIndex = accountIndex;
-    this.ganache = ganache;
+    this.providerParam = providerParam;
   }
 
   async init() {
+    if (this.providerParam === "metamask") {
+      (window as any).ethereum.on("accountsChanged", async () => {
+        window.location.reload();
+        // await this.initAccount();
+      });
+      // (window as any).ethereum.on("chainChanged", () => {
+      //   console.log("chainChanged");
+      // });
+    }
+
     await this.initAccount();
     await this.initContract();
 
@@ -51,21 +61,12 @@ export default class Application {
     this.contract = contract;
     this.dispatch.eth.setContract(this.contract);
 
-    this.registerEvents();
-  }
-
-  registerEvents() {
-    this.registerEvent("GameCreated");
-    this.registerEvent("GameJoined");
-    this.registerEvent("Attack");
-    this.registerEvent("AttackResult");
-    this.registerEvent("GameFinished");
+    this.trackEvents();
   }
 
   formatEventValues(eventName: ContractEvent, data: any[]) {
     const returnValues = (
-      (BattleshipAbi.find((x) => x.name === eventName) as any)
-        .inputs as any[]
+      (BattleshipAbi.find((x) => x.name === eventName) as any).inputs as any[]
     ).reduce((acc, input, index) => {
       acc[input.name] = data[index];
       return acc;
@@ -74,19 +75,76 @@ export default class Application {
     return returnValues;
   }
 
-  registerEvent(eventName: ContractEvent) {
-    const provider = new ethers.JsonRpcProvider(NODE_HTTP_URL);
+  async trackEvents() {
+    this.trackEvent("GameCreated");
+    this.trackEvent("GameJoined");
+    this.trackEvent("Attack");
+    this.trackEvent("AttackResult");
+    this.trackEvent("GameFinished");
+  }
 
-    try {
-      new ethers.Contract(contractAddress, BattleshipAbi, provider).addListener(
+  trackEvent(eventName: ContractEvent) {
+    this.registerEvent(eventName);
+    // this.getPastEvent(eventName);
+  }
+
+  async getPastEvent(eventName: ContractEvent) {
+    let provider: any;
+
+    if (this.providerParam === "metamask") {
+      // provider = new ethers.providers.Web3Provider((window as any).ethereum);
+      provider = new ethers.BrowserProvider((window as any).ethereum);
+
+    } else {
+    // provider = new ethers.providers.JsonRpcProvider(NODE_HTTP_URL);
+    provider = new ethers.JsonRpcProvider(NODE_HTTP_URL);
+    }
+    const battleship = new ethers.Contract(
+      contractAddress,
+      BattleshipAbi,
+      provider
+    );
+
+    const events = await battleship.queryFilter(eventName);
+
+    events.forEach((event) => {
+      console.log("Past Event:", eventName);
+      const returnValues = this.formatEventValues(
         eventName,
-        (...data) => {
+        (event as any).args
+      );
+      // console.log("returnValues", returnValues);
+      this[`on${eventName}`](returnValues);
+    });
+  }
+
+  async registerEvent(eventName: ContractEvent) {
+    let provider: any;
+
+    if (this.providerParam === "metamask") {
+      // provider = new ethers.providers.Web3Provider((window as any).ethereum);
+      provider = new ethers.BrowserProvider((window as any).ethereum);
+
+    } else {
+    // provider = new ethers.providers.JsonRpcProvider(NODE_HTTP_URL);
+    provider = new ethers.JsonRpcProvider(NODE_HTTP_URL);
+    }
+
+    const battleship = new ethers.Contract(
+      contractAddress,
+      BattleshipAbi,
+      provider
+    );
+    try {
+      battleship.addListener(
+        eventName,
+        // { fromBlock: 'latest' },
+        (...data: any[]) => {
           console.log("Event:", eventName);
-          console.log("data", data);
           try {
             const returnValues = this.formatEventValues(eventName, data);
 
-            console.log("returnValues", returnValues);
+            // console.log("returnValues", returnValues);
             this[`on${eventName}`](returnValues);
           } catch (error) {
             console.error("error", eventName, error);
@@ -117,35 +175,53 @@ export default class Application {
 
   async getAccount() {
     try {
-      if (!this.ganache) {
+      if (this.providerParam === "metamask") {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         await (window as any).ethereum.request({
           method: "eth_requestAccounts",
         });
+        const accounts = await this.web3.eth.getAccounts();
+
+        if (!accounts.length) {
+          alert(`
+            No ETH account detected !
+  
+            - Is Metamask installed ?
+            - Is Metamask configured to work with Ganache ?
+          `);
+
+          throw new Error("No accounts detected");
+        }
+
+        return {
+          address: accounts[this.accountIndex],
+        } as Web3BaseWalletAccount;
+      } else {
+        const PRIVATE_KEYS = (
+          import.meta.env.VITE_ACCOUNT_PRIVATE_KEYS as string
+        )
+          .replace(/\s+/g, "")
+          .split(",");
+
+        PRIVATE_KEYS.forEach((privateKey) => {
+          this.web3.eth.accounts.wallet.add(privateKey);
+        });
+
+        const accounts = this.web3.eth.accounts.wallet;
+
+        if (!accounts.length) {
+          alert(`
+            No ETH account detected !
+  
+            - Is Metamask installed ?
+            - Is Metamask configured to work with Ganache ?
+          `);
+
+          throw new Error("No accounts detected");
+        }
+
+        return accounts[this.accountIndex];
       }
-
-      const PRIVATE_KEYS = (import.meta.env.VITE_ACCOUNT_PRIVATE_KEYS as string)
-        .replace(/\s+/g, "")
-        .split(",");
-
-      PRIVATE_KEYS.forEach((privateKey) => {
-        this.web3.eth.accounts.wallet.add(privateKey);
-      });
-
-      const accounts = this.web3.eth.accounts.wallet;
-
-      if (!accounts.length) {
-        alert(`
-          No ETH account detected !
-
-          - Is Metamask installed ?
-          - Is Metamask configured to work with Ganache ?
-        `);
-
-        throw new Error("No accounts detected");
-      }
-
-      return accounts[this.accountIndex];
     } catch (error) {
       console.error("Failed to get account", error);
       throw error;

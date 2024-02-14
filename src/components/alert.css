@@ -1,7 +1,5 @@
 .alert {
-  padding: 12px;
-  font-size: 90%;
-  border-radius: 2px;
+  @apply p-[12px] text-lg rounded-[2px];
 }
 
 .alert--info {

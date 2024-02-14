@@ -8,6 +8,7 @@ dotenv.config();
 const PRIVATE_KEYS = process.env.VITE_ACCOUNT_PRIVATE_KEYS.replace(/\s+/g, "").split(
   ","
 );
+const ENABLE_FORKING = process.env.HARDHAT_ENABLE_FORKING === "TRUE";
 /** @type import('hardhat/config').HardhatUserConfig */
 // eslint-disable-next-line no-undef
 module.exports = {
@@ -37,7 +38,7 @@ module.exports = {
     hardhat: {
       forking: {
         url: "https://json-rpc.testnet.swisstronik.com",
-        enabled: true,
+        enabled: ENABLE_FORKING,
       },
       accounts: PRIVATE_KEYS.map((key) => ({
         privateKey: key,

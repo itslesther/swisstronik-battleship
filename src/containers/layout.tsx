@@ -10,6 +10,7 @@ import qs from "qs";
 const query = document.location.search.substring(1);
 const params = qs.parse(query);
 const accountIndex = Number(params.account);
+const providerParam = params.provider as "metamask" | "raw-keys";
 
 // import Cookies from "universal-cookie";
 
@@ -20,7 +21,7 @@ class Layout extends Component<Props> {
     const gameId = Number(_gameId);
     this.props.getGame(gameId);
 
-    this.props.navigate(`/games/${gameId}?account=${accountIndex}`);
+    this.props.navigate(`/games/${gameId}?account=${accountIndex}&provider=${providerParam}`);
   };
 
   render() {
@@ -28,14 +29,14 @@ class Layout extends Component<Props> {
 
     return (
       <div className="container u-cf">
-        <div className="u-fl" style={{ width: 501 }}>
+        <div className="u-fl">
           {children}
         </div>
         <div style={{ marginLeft: 525 }}>
           <div className="u-mb">
             <h3>My games</h3>
-            <p>
-              <Link to={`/?account=${accountIndex}`}>Create new game</Link>
+            <p className="new_game_lable">
+              <Link to={`/?account=${accountIndex}&provider=${providerParam}`}>Create new game</Link>
             </p>
             {myGames.length === 0 && <p>No games</p>}
             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}

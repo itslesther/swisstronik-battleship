@@ -19,7 +19,7 @@ export default class Grid extends Component<Props> {
     const { mod, disabled, className, onAttack } = this.props;
 
     return cx(
-      "grid",
+      "grid_container",
       `grid--${mod}`,
       {
         "grid--selectable": !disabled && onAttack,

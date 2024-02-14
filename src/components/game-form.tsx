@@ -7,14 +7,14 @@ const gridSizes = Bs.getGridSizes();
 
 export default class GameForm extends Component<Props> {
   static defaultProps = {
-    buttonText: "Create new game"
+    buttonText: "Create new game",
   };
 
   state = {
     gridSize: 3,
     ships: Bs.createGrid(3),
     ocean: Bs.createGrid(3, true),
-    disabled: false
+    disabled: false,
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -24,7 +24,7 @@ export default class GameForm extends Component<Props> {
     this.setState({
       gridSize,
       ships: Bs.createGrid(gridSize),
-      ocean: Bs.createGrid(gridSize, true)
+      ocean: Bs.createGrid(gridSize, true),
     });
   };
 
@@ -33,7 +33,7 @@ export default class GameForm extends Component<Props> {
     const { gridSize } = this.state;
 
     this.setState({
-      ships: Bs.createGrid(gridSize)
+      ships: Bs.createGrid(gridSize),
     });
   };
 
@@ -52,8 +52,10 @@ export default class GameForm extends Component<Props> {
     return (
       <div>
         <div className="u-mb">
-          <h3>Grid size</h3>
-          {gridSizes.map(size => (
+          <div className="flex"></div>
+          <h3 className="text-3xl">Grid size</h3>
+
+          {gridSizes.map((size) => (
             <label key={size} className="radio">
               <input
                 type="radio"

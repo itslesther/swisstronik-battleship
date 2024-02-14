@@ -10,6 +10,7 @@ import {
 import GameShow from "./containers/game-show";
 import GameCreate from "./containers/game-create";
 import { Store } from "./data/store";
+import "./App.css";
 
 const router = createBrowserRouter(
   //   [
@@ -25,7 +26,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/">
       <Route path="/" element={<GameCreate />}></Route>
-      <Route path="/games/:game" element={<GameShow />}/>
+      <Route path="/games/:game" element={<GameShow />} />
     </Route>
   )
 );
@@ -33,9 +34,11 @@ const router = createBrowserRouter(
 export default class App extends Component<{ store: Store }> {
   render() {
     return (
-      <Provider store={this.props.store}>
-        <RouterProvider router={router} />
-      </Provider>
+      <div className="app_container">
+        <Provider store={this.props.store}>
+          <RouterProvider router={router} />
+        </Provider>
+      </div>
     );
   }
 }

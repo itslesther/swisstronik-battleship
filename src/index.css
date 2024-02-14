@@ -1,68 +1,164 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+html,
+body {
+  @apply h-full;
+  /* height: 100%; */
 }
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+html {
+  @apply box-border;
 }
-a:hover {
-  color: #535bf2;
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  @apply m-0 p-0 font-sans bg-black text-white;
 }
 
+a {
+  @apply cursor-pointer text-fuchsia-700 underline select-none;
+}
+
+a:hover {
+  @apply no-underline;
+}
+
+#root {
+  @apply flex flex-col min-h-screen;
+}
+
+.container {
+  @apply mx-auto w-[900px] p-[24px];
+}
+
+h1,
+h2,
+h3 {
+  @apply text-gray-600
+  font-normal
+  uppercase
+  mt-0
+  mr-0
+  mb-[12px]
+  ml-0;
+}
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  @apply text-xl;
+}
+h2 {
+  @apply text-lg;
+}
+h3 {
+  @apply text-lg;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  @apply py-[12px]
+    px-[18px]
+    mt-5
+    rounded-[2px]
+    cursor-pointer
+    uppercase
+    font-bold
+    text-[12px]
+    bg-red-500;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+button + button {
+  @apply ml-[12px];
+}
+button:hover,
+button:active {
+  @apply bg-red-900;
+}
+button[disabled] {
+  @apply opacity-40 cursor-default bg-gray-400;
+}
+
+.button--small {
+  @apply py-[4px]
+    px-[6px]
+    text-[10px];
+}
+
+.radio input {
+  @apply relative top-[1px];
+}
+.radio + .radio {
+  @apply ml-[24px];
+}
+
+.u-mb {
+  @apply mb-[24px];
+}
+
+.u-mb-small {
+  @apply mb-[12px];
+}
+.u-fl {
+  @apply float-left w-[501px];
+}
+.u-fr {
+  @apply float-right;
+}
+.u-half {
+  @apply w-[50%];
+}
+
+.u-cf:before,
+.u-cf:after {
+  @apply table;
+  content: " ";
+}
+.u-cf:after {
+  @apply clear-both;
+}
+
+.label {
+  @apply rounded-[2px]
+    py-[4px]
+    px-[6px]
+    uppercase
+    font-bold
+    text-[80%]
+    bg-red-500
+    border-[1px]
+    border-solid
+    border-transparent
+    inline-block
+    text-center;
+}
+h1 .label {
+  @apply text-[60%]
+    ml-[12px]
+    relative
+    top-[-3px];
+}
+.label--open {
+  @apply bg-black text-white border-white;
+}
+.label--ready {
+  @apply bg-green-700 text-white;
+}
+.label--started {
+  @apply bg-white text-black;
+}
+.label--finished {
+  @apply bg-gray-500 text-black;
+}
+.label--info {
+  @apply bg-blue-700 text-white;
+}
+.label--circle {
+  @apply rounded-[50%] text-center p-[6px] w-[25px] h-[25px] min-w-[auto];
+}
+
+.new_game_lable {
+  @apply mb-5;
 }

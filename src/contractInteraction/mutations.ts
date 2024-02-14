@@ -13,24 +13,25 @@ type TransactionParams = {
   value?: string;
 };
 
+const NODE_HTTP_URL = import.meta.env.VITE_NODE_HTTP_URL as string;
+const CONTRACT_ADDRESS = import.meta.env.VITE_CONTRACT_ADDRESS;
+
 const contractMutation = async (
   methodName: ContractMutationMethods,
   params: TransactionParams,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ...args: any[]
 ) => {
-  const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS;
-  const NODE_HTTP_URL = import.meta.env.VITE_NODE_HTTP_URL as string;
 
   const web3 = new Web3(NODE_HTTP_URL);
-  const contract = new web3.eth.Contract(BattleshipAbi, contractAddress);
+  const contract = new web3.eth.Contract(BattleshipAbi, CONTRACT_ADDRESS);
   const data = contract.methods[methodName](...args).encodeABI();
 
   console.log("mutation.methodName", methodName);
 
   return sendShieldedTransaction(
     params.signer,
-    contractAddress,
+    CONTRACT_ADDRESS,
     data,
     params.value || "0"
   );

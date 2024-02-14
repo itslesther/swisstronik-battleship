@@ -7,11 +7,6 @@
 const hre = require("hardhat");
 const { ethers } = hre;
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires, no-undef
-const dotenv = require("dotenv");
-dotenv.config();
-// eslint-disable-next-line no-undef
-
 async function main() {
   // Hardhat always runs the compile task when running scripts with its command
   // line interface.
@@ -27,22 +22,6 @@ async function main() {
   await battleship.waitForDeployment();
 
   console.log("Battleship Contract deployed to:", battleship.target);
-  // console.log("Battleship Contract deployed to:", battleship.target);
-
-  // await sleep({ seconds: 15 * 2 });
-
-  // try {
-  //   await run("verify:verify", {
-  //     address: invoiceContact.address,
-  //     constructorArguments: [],
-  //   });
-  //   console.log(
-  //     "Invoice Contract deployed and verified to:",
-  //     invoiceContact.address
-  //   );
-  // } catch (err) {
-  //   console.error("Error verifying Contract. Reason:", err);
-  // }
 }
 
 // We recommend this pattern to be able to use async/await everywhere

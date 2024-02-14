@@ -13,6 +13,7 @@ import qs from "qs";
 const query = document.location.search.substring(1);
 const params = qs.parse(query);
 const accountIndex = Number(params.account);
+const providerParam = params.provider as "metamask" | "raw-keys";
 
 export default (dispatch: Dispatch) => ({
   //
@@ -51,7 +52,7 @@ export default (dispatch: Dispatch) => ({
 
     dispatch.ships.setShips({ gameId, ships, salt: salt! });
 
-    navigate(`/games/${gameId}?account=${accountIndex}`);
+    navigate(`/games/${gameId}?account=${accountIndex}&provider=${providerParam}`);
   },
 
   //

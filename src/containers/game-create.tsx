@@ -5,9 +5,6 @@ import GameForm from "../components/game-form";
 import { Dispatch } from "../data/store";
 import { useNavigate } from "react-router-dom";
 
-// import { useHistory } from 'react-router-dom';
-// import * as sel from "data/selectors";
-
 function GameCreate(props: Props) {
   const navigate = useNavigate();
 
@@ -22,9 +19,6 @@ function GameCreate(props: Props) {
     </Layout>
   );
 }
-
-// @connect
-// const state = state => ({});
 
 const mapDispatch = (dispatch: Dispatch) => ({
   createGame: dispatch.games.createGame,
