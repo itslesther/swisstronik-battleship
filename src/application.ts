@@ -85,7 +85,7 @@ export default class Application {
 
   trackEvent(eventName: ContractEvent) {
     this.registerEvent(eventName);
-    // this.getPastEvent(eventName);
+    this.getPastEvent(eventName);
   }
 
   async getPastEvent(eventName: ContractEvent) {
@@ -121,14 +121,14 @@ export default class Application {
   async registerEvent(eventName: ContractEvent) {
     let provider: any;
 
-    if (this.providerParam === "metamask") {
-      // provider = new ethers.providers.Web3Provider((window as any).ethereum);
-      provider = new ethers.BrowserProvider((window as any).ethereum);
+    // if (this.providerParam === "metamask") {
+    //   // provider = new ethers.providers.Web3Provider((window as any).ethereum);
+    //   provider = new ethers.BrowserProvider((window as any).ethereum);
 
-    } else {
+    // } else {
     // provider = new ethers.providers.JsonRpcProvider(NODE_HTTP_URL);
     provider = new ethers.JsonRpcProvider(NODE_HTTP_URL);
-    }
+    // }
 
     const battleship = new ethers.Contract(
       contractAddress,
