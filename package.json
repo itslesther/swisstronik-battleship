@@ -1,0 +1,48 @@
+{
+  "name": "swisstronik-battleship-upgrade",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "hardhat:test": "npx hardhat test"
+  },
+  "dependencies": {
+    "@metamask/detect-provider": "^2.0.0",
+    "@openzeppelin/contracts": "^5.0.1",
+    "@rematch/core": "^2.2.0",
+    "@rematch/persist": "^2.1.2",
+    "@swisstronik/swisstronik.js": "^1.0.0",
+    "classnames": "^2.5.1",
+    "lodash": "^4.17.21",
+    "qs": "^6.11.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^9.1.0",
+    "react-router-dom": "^6.22.0",
+    "reselect": "^5.1.0",
+    "universal-cookie": "^7.0.2",
+    "web3": "^4.5.0"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@types/lodash": "^4.14.202",
+    "@types/qs": "^6.9.11",
+    "@types/react": "^18.2.55",
+    "@types/react-dom": "^18.2.19",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "dotenv": "^16.4.3",
+    "eslint": "^8.56.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "hardhat": "^2.19.5",
+    "typescript": "^5.2.2",
+    "vite": "^5.1.0",
+    "vite-plugin-node-polyfills": "^0.21.0"
+  }
+}

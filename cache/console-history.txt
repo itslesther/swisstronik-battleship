@@ -1,0 +1,11 @@
+await ethers.provider.getBlockNumber()
+clear
+await ethers.provider.getBlockNumber()
+clear
+await ethers.provider.getBlockNumber()
+await ethers.provider.getBlock()
+await ethers.provider.getBalance("0xc288ca632d39c1dC003B9F835D5CFf3c871Ac00F")
+await ethers.provider.getBalance("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
+ethers.provider.getBalance("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
+await web3.eth.getBalance()
+Battleship = await ethers.getContractFactory("Battleship")

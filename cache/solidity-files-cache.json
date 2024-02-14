@@ -1,0 +1,113 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/Users/itslesther/Work/Swisstronik/swisstronik-battleship-upgrade/contracts/Battleship.sol": {
+      "lastModificationDate": 1707781796828,
+      "contentHash": "590ec8c49ab218a02ea18c3459736796",
+      "sourceName": "contracts/Battleship.sol",
+      "solcConfig": {
+        "version": "0.4.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./installed_contracts/zeppelin/Ownable.sol",
+        "./installed_contracts/zeppelin/SafeMath.sol"
+      ],
+      "versionPragmas": [
+        "^0.4.22"
+      ],
+      "artifacts": [
+        "Battleship"
+      ]
+    },
+    "/Users/itslesther/Work/Swisstronik/swisstronik-battleship-upgrade/contracts/installed_contracts/zeppelin/Ownable.sol": {
+      "lastModificationDate": 1707781670851,
+      "contentHash": "fbf572bebf46abfa319d0cb551aa5c33",
+      "sourceName": "contracts/installed_contracts/zeppelin/Ownable.sol",
+      "solcConfig": {
+        "version": "0.4.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.4.11"
+      ],
+      "artifacts": [
+        "Ownable"
+      ]
+    },
+    "/Users/itslesther/Work/Swisstronik/swisstronik-battleship-upgrade/contracts/installed_contracts/zeppelin/SafeMath.sol": {
+      "lastModificationDate": 1707781702935,
+      "contentHash": "bd55d2992549d6e6dbe6b62ae53e9abe",
+      "sourceName": "contracts/installed_contracts/zeppelin/SafeMath.sol",
+      "solcConfig": {
+        "version": "0.4.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.4.11"
+      ],
+      "artifacts": [
+        "SafeMath"
+      ]
+    }
+  }
+}
