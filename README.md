@@ -76,7 +76,7 @@ Browser 2: `http://localhost:5173?account=0&provider=metamask`
 
 - There are times where Metamask doesn't trigger the contract events, or they take time to be triggered
 - When trying to call "attack" contract method using Swisstronik Tesnet, the transaction fails with the error: "rpc error: code = Internal desc = execution reverted: Reverted"
-- This method does work when using the local network, and the createGame and joinGame methods also works on the Swisstronik Tesnet
+- This method works when using the local network, and the createGame and joinGame methods also works on the Swisstronik Tesnet
 - Doing some research I found the following link: [StackOverflow](https://stackoverflow.com/questions/70257820/metamask-rpc-error-execution-reverted-code-32000-message-execution-reve)
 - It seems the EVM is not finding the Contract method for some reason. This seems to be an EVM internal error. It doesn't seems to have nothing to do with the game code.
 - When refreshing the browser, the game checks for the past contract events, from 10000 blocks before the current one, this can be slow and might not work if there are older events. Also, sometimes, the event is not triggerred or it takes too much time to be triggerred. Solution to both issues: Use an indexer such as Moralis or The Graph.
