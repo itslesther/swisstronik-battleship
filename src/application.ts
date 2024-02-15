@@ -6,6 +6,7 @@ import { Store } from "./data/store";
 // import { Game } from "./data/models/games";
 import { contractQueries } from "./contractInteraction";
 import { ethers } from "ethers";
+import { Provider } from "ethers";
 
 const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS;
 const NODE_HTTP_URL = import.meta.env.VITE_NODE_HTTP_URL as string;
@@ -89,7 +90,7 @@ export default class Application {
   }
 
   async getPastEvent(eventName: ContractEvent) {
-    let provider: any;
+    let provider: Provider;
 
     if (this.providerParam === "metamask") {
       // provider = new ethers.providers.Web3Provider((window as any).ethereum);
@@ -105,7 +106,9 @@ export default class Application {
       provider
     );
 
-    const events = await battleship.queryFilter(eventName);
+    const currentBlockNumber = await provider.getBlockNumber();
+
+    const events = await battleship.queryFilter(eventName, currentBlockNumber -10000);
 
     events.forEach((event) => {
       console.log("Past Event:", eventName);
@@ -119,7 +122,7 @@ export default class Application {
   }
 
   async registerEvent(eventName: ContractEvent) {
-    let provider: any;
+    let provider: Provider;
 
     // if (this.providerParam === "metamask") {
     //   // provider = new ethers.providers.Web3Provider((window as any).ethereum);
@@ -127,6 +130,7 @@ export default class Application {
 
     // } else {
     // provider = new ethers.providers.JsonRpcProvider(NODE_HTTP_URL);
+    // eslint-disable-next-line prefer-const
     provider = new ethers.JsonRpcProvider(NODE_HTTP_URL);
     // }
 

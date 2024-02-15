@@ -7,6 +7,11 @@ export default defineConfig({
   plugins: [react(), nodePolyfills({
     include: ['events']
   })],
+  esbuild: {
+    supported: {
+      'top-level-await': true //browsers can handle top-level-await features
+    },
+  },
   resolve: {
     alias: {
       events: 'events',
