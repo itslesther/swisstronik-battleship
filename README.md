@@ -1,30 +1,85 @@
-# React + TypeScript + Vite
+# Swisstronik Battleship
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Swisstronik Battleship is a Game modified to use latest tools: Hardhat, Vite, Typescript, Tailwind and Swisstronik blockchain.
 
-Currently, two official plugins are available:
+## Development process
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+In order to perform the the project migration from Truffle to Hardhat, Webpack to Vite and Javascript to Typescript, the repositories dependencies needed to be upgraded which caused many compilation issues which where fixed by studying the code, reading the dependencies documentation and searching for solutions. Solving compilation errors and making the project work with the new tools was the main challenge of the project. But after the project was working with the new tools, the development was very smooth.
 
-## Expanding the ESLint configuration
+## Quick Start
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+To install the dependencies run: `npm install`
 
-- Configure the top-level `parserOptions` property like this:
+### Running Project on Hardhat Local Network
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+1. Set `HARDHAT_ENABLE_FORKING="FALSE"` in the .env file (Forking, currently doesn't work with Swisstronik Network)
+2. Set `VITE_IS_SWISSTRONIK_NETWORK="FALSE"` in the .env file 
+3. Set `VITE_NODE_HTTP_URL= "http://127.0.0.1:8545"` in the .env file
+4. Set `VITE_ACCOUNT_PRIVATE_KEYS` If using local private key instead of Metamask (more details explained later)
+5. Run `npx hardhat node`
+6. Run in another console `npx hardhat run scripts/deploy.cjs --network localhost`
+7. Copy the contract address and paste it in the `VITE_CONTRACT_ADDRESS` in the .env file
+8. Run `npm run dev`
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+#### If using local private key instead of Metamask
+
+The game needs two tabs open:
+
+- Go to:
+
+Tab 1: `http://localhost:5173?account=0&provider=raw-keys`
+Tab 2: `http://localhost:5173?account=1&provider=raw-keys`
+
+This will use the private keys set in the .env file in the `VITE_ACCOUNT_PRIVATE_KEYS` variable.
+
+#### If using Metamask instead of local private keys
+
+The game needs two browsers open since metamask can only select one account at a time.
+
+- Go to:
+
+Browser 1: `http://localhost:5173?account=0&provider=metamask`
+Browser 2: `http://localhost:5173?account=0&provider=metamask`
+
+- Select localhost:8545 network on Metamask
+- Clear the Metamask activity data (disable it and enable it again if needed)
+- Play the game on both browsers
+
+### Running Project on Swisstronik Testnet
+
+1. Set `HARDHAT_ENABLE_FORKING="FALSE"` in the .env file (Forking, currently doesn't work with Swisstronik Network)
+2. Set `VITE_IS_SWISSTRONIK_NETWORK="TRUE"` in the .env file 
+3. Set `VITE_NODE_HTTP_URL= "https://json-rpc.testnet.swisstronik.com"` in the .env file
+4. Set `VITE_ACCOUNT_PRIVATE_KEYS` If using local private key instead of Metamask
+5. Run `npx hardhat run scripts/deploy.cjs --network swisstronikTestnet`
+6. Copy the contract address and paste it in the `VITE_CONTRACT_ADDRESS` in the .env file
+7. Run `npm run dev`
+
+#### If using local private key instead of Metamask
+
+- Go to:
+
+Tab 1: `http://localhost:5173?account=0&provider=raw-keys`
+Tab 2: `http://localhost:5173?account=1&provider=raw-keys`
+
+#### If using Metamask instead of local private keys
+
+- Go to:
+
+Browser 1: `http://localhost:5173?account=0&provider=metamask`
+Browser 2: `http://localhost:5173?account=0&provider=metamask`
+
+- Select swisstronik Tesnet on Metamask
+- Play the game on both browsers/tabs
+
+## Issues found
+
+- There are times where Metamask doesn't trigger the contract events, or they take time to be triggered
+- When trying to call "attack" contract method using Swisstronik Tesnet, the transaction fails with the error: "rpc error: code = Internal desc = execution reverted: Reverted"
+- This method does work when using the local network, and the createGame and joinGame methods also works on the Swisstronik Tesnet
+- Doing some research if found the following link: [StackOverflow](https://stackoverflow.com/questions/70257820/metamask-rpc-error-execution-reverted-code-32000-message-execution-reve)
+- It seems the EVM is not finding the Contract method for some reason
+
+## Link to Demos with all cases
+
+[Demos](https://drive.google.com/drive/folders/1iEuvcMlGGEMdbl9WA8J5sAqpxVHu5r9E)
