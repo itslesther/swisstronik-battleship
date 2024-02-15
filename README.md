@@ -85,3 +85,6 @@ Browser 2: `http://localhost:5173?account=0&provider=metamask`
 ## Link to Demos with all cases
 
 [Demos](https://drive.google.com/drive/folders/1iEuvcMlGGEMdbl9WA8J5sAqpxVHu5r9E)
+
+## Original Game Repository
+[Link](https://github.com/eightyfive/eth-battleship)
