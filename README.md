@@ -79,7 +79,7 @@ Browser 2: `http://localhost:5173?account=0&provider=metamask`
 - This method does work when using the local network, and the createGame and joinGame methods also works on the Swisstronik Tesnet
 - Doing some research I found the following link: [StackOverflow](https://stackoverflow.com/questions/70257820/metamask-rpc-error-execution-reverted-code-32000-message-execution-reve)
 - It seems the EVM is not finding the Contract method for some reason
-- When refreshing the browser, the game checks for the past contract events, from 1000000 blocks before the current one, this can be slow and might not work if there are older events. Also, sometimes, the event is not triggerred or it takes too much time to be triggerred. Solution to both issues: Use an indexer such as Moralis or The Graph
+- When refreshing the browser, the game checks for the past contract events, from 10000 blocks before the current one, this can be slow and might not work if there are older events. Also, sometimes, the event is not triggerred or it takes too much time to be triggerred. Solution to both issues: Use an indexer such as Moralis or The Graph
 
 
 ## Link to Demos with all cases
